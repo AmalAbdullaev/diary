@@ -36557,20 +36557,35 @@ $provide.value("$locale", {
 require('./angular');
 module.exports = angular;
 
-},{"./angular":"node_modules/angular/angular.js"}],"index.js":[function(require,module,exports) {
+},{"./angular":"node_modules/angular/angular.js"}],"../config.js":[function(require,module,exports) {
+module.exports = {
+  host: 'http://localhost:3000'
+};
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _angular = _interopRequireDefault(require("angular"));
+
+var _config = _interopRequireDefault(require("../config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _angular.default.module('myApp', []).controller('myController', ['$http', function ($http) {
   var vm = this;
-  $http.get('http://localhost:3000/diary').then(function (response) {
-    console.log(response.data);
-  });
+  var api = _config.default.host; // $http.get(api + '/diary').then(function(response) {
+  //   console.log(response.data);
+  // });
+  // $http.post(api + '/diary', {"m": 1}).then(function(response) {
+  //   console.log(response.data);
+  // });
+  // $http.put(api + '/diary/27', {"mferf": 1123}).then(function(response) {
+  //   console.log(response.data);
+  // });
+  // $http.delete(api + '/diary/26').then(function(response) {
+  //   console.log(response.data);
+  // });
 }]);
-},{"angular":"node_modules/angular/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"angular":"node_modules/angular/index.js","../config":"../config.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -36598,7 +36613,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "11478" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1692" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

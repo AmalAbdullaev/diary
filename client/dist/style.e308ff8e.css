@@ -1,0 +1,145 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+ul::-webkit-scrollbar { width: 0 !important }
+
+
+.header {
+  background-color: #ff7f50;
+  justify-content: space-around;
+  position: fixed;
+  display: flex;
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.logo {
+  width: 50px;
+  background-color: red;
+}
+
+.search {
+  width: 500px;
+  background-color: red;
+  border: none;
+}
+
+.add-record {
+  display: flex;
+  justify-content: space-around;
+  width: 100px;
+}
+
+.add-record__button {
+  height: 25px;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 75px;
+}
+
+.side-bar {
+  background-color: aqua;
+  position: fixed;
+}
+
+.record {
+  background-color: chocolate;
+  margin-right: 400px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 700px;
+}
+
+.headline {
+  font-size: 25px;
+}
+
+.description {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.categories {
+  height: 700px;
+  overflow-y: scroll;
+  width: 250px;
+  list-style-type: none;
+}
+
+.category {
+  font-size: 20px;
+  background-color: chartreuse;
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
+  margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+button:active, button:focus {
+  outline: none;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+.content {
+  margin-left: 400px;
+}
+
+.record-date {
+  padding: 20px;
+  display: block;
+  margin-left: 500px;
+}
+
+.record-count {
+  font-size: 20px;
+  margin-left:30px;
+  margin-right: 5px;
+}
+
+.header__logo {
+}
+
+.header__item {
+  height: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.header__item-count {
+  height: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.header__search {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */
