@@ -14,6 +14,8 @@ angular
 
   vm.record = {};
 
+  loadAll();
+
   vm.openModal = function () {
     // console.log(modal[0].style);
     modal[0].style.display = "block";
@@ -35,21 +37,22 @@ angular
     });    
   }
 
-  vm.setSelectedColor = function(){
+  vm.setSelectedColor = function (thisCategory){
 
     let category =  vm.categories.find((category) => {
-      if(category.name === vm.selectedCategory)
+      if(category.name.toLowerCase() === thisCategory.toLowerCase())
         return category;
     }) || 'white';
 
     return { 'background-color': category.color};
-
   }
+
+
   vm.setColor = function (color) {
       return { 'background-color': color }
   }
 
-  loadAll();
+
   // $http.get(api + '/diary').then(function(response) {
   //   console.log(response.data);
   // });

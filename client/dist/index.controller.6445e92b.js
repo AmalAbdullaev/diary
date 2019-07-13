@@ -36580,6 +36580,7 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
   vm.categories = [];
   vm.selectedCategory = "Выберите категорию";
   vm.record = {};
+  loadAll();
 
   vm.openModal = function () {
     // console.log(modal[0].style);
@@ -36602,9 +36603,9 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
     });
   }
 
-  vm.setSelectedColor = function () {
+  vm.setSelectedColor = function (thisCategory) {
     var category = vm.categories.find(function (category) {
-      if (category.name === vm.selectedCategory) return category;
+      if (category.name.toLowerCase() === thisCategory.toLowerCase()) return category;
     }) || 'white';
     return {
       'background-color': category.color
@@ -36615,9 +36616,7 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
     return {
       'background-color': color
     };
-  };
-
-  loadAll(); // $http.get(api + '/diary').then(function(response) {
+  }; // $http.get(api + '/diary').then(function(response) {
   //   console.log(response.data);
   // });
   // $http.post(api + '/diary', {"m": 1}).then(function(response) {
@@ -36629,6 +36628,7 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
   // $http.delete(api + '/diary/26').then(function(response) {
   //   console.log(response.data);
   // });
+
 }]);
 },{"angular":"node_modules/angular/index.js","../config":"../config.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
