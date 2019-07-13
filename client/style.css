@@ -12,8 +12,7 @@ ul::-webkit-scrollbar { width: 0 !important }
 
 
 .header {
-  background-color: #ff7f50;
-  justify-content: space-around;
+  background-color:darkorange;
   position: fixed;
   display: flex;
   top: 0;
@@ -23,13 +22,13 @@ ul::-webkit-scrollbar { width: 0 !important }
 
 .logo {
   width: 50px;
-  background-color: red;
+  /* background-color: red; */
 }
 
 .search {
   width: 500px;
-  background-color: red;
-  border: none;
+  /* background-color: red; */
+  border: 1px solid gray;
 }
 
 .add-record {
@@ -43,18 +42,16 @@ ul::-webkit-scrollbar { width: 0 !important }
 }
 
 .main {
-  display: flex;
-  flex-grow: 1;
   margin-top: 75px;
 }
 
 .side-bar {
-  background-color: aqua;
+  /* background-color: aqua; */
   position: fixed;
 }
 
 .record {
-  background-color: chocolate;
+  /* background-color: chocolate; */
   margin-right: 400px;
   padding-left: 20px;
   padding-right: 20px;
@@ -62,6 +59,8 @@ ul::-webkit-scrollbar { width: 0 !important }
   margin-top: 20px;
   margin-bottom: 20px;
   width: 700px;
+  display: flex;
+  flex-direction: column;
 }
 
 .headline {
@@ -121,6 +120,7 @@ button {
 }
 
 .header__logo {
+  margin-left: 100px;
 }
 
 .header__item {
@@ -140,4 +140,11 @@ button {
   font-size: 25px;
   padding-left: 20px;
   padding-right: 20px;
+  margin-left: 250px;
+  margin-right: 500px;
+}
+
+
+.edit__record {
+  align-self: flex-end;
 }
