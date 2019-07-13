@@ -36576,6 +36576,11 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
 
   var modal = _angular.default.element(document.querySelector("#myModal"));
 
+  vm.records = [];
+  vm.categories = [];
+  vm.selectedCategory = "Выберите категорию";
+  vm.record = {};
+
   vm.openModal = function () {
     // console.log(modal[0].style);
     modal[0].style.display = "block";
@@ -36583,7 +36588,36 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
 
   vm.closeModal = function () {
     modal[0].style.display = "none";
-  }; // $http.get(api + '/diary').then(function(response) {
+  };
+
+  function loadAll() {
+    $http.get(api + '/diary').then(function (response) {
+      // console.log(response.data);
+      vm.records = response.data;
+      $http.get(api + '/categories').then(function (response) {
+        // console.log(response.data);
+        vm.categories = response.data;
+        console.log(vm.categories);
+      });
+    });
+  }
+
+  vm.setSelectedColor = function () {
+    var category = vm.categories.find(function (category) {
+      if (category.name === vm.selectedCategory) return category;
+    }) || 'white';
+    return {
+      'background-color': category.color
+    };
+  };
+
+  vm.setColor = function (color) {
+    return {
+      'background-color': color
+    };
+  };
+
+  loadAll(); // $http.get(api + '/diary').then(function(response) {
   //   console.log(response.data);
   // });
   // $http.post(api + '/diary', {"m": 1}).then(function(response) {
@@ -36595,7 +36629,6 @@ _angular.default.module('myApp', []).controller('myController', ['$http', '$docu
   // $http.delete(api + '/diary/26').then(function(response) {
   //   console.log(response.data);
   // });
-
 }]);
 },{"angular":"node_modules/angular/index.js","../config":"../config.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -36625,7 +36658,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9852" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "18172" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
