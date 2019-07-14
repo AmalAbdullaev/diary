@@ -10,20 +10,11 @@ angular
   const modal = angular.element(document.querySelector("#myModal"));
   vm.records = [];
   vm.categories = [];
-  vm.selectedCategory =  "Выберите категорию"  ;
-
-  vm.record = {};
-
+  vm.openModal = openModal;
+  vm.closeModal = closeModal;
+  vm.addRecord = addRecord;
+  vm.searchString = '';
   loadAll();
-
-  vm.openModal = function () {
-    // console.log(modal[0].style);
-    modal[0].style.display = "block";
-  }
-
-  vm.closeModal = function () {
-    modal[0].style.display = "none";
-  }
 
   function loadAll() {
     $http.get(api + '/diary').then(function(response) {
@@ -50,6 +41,73 @@ angular
 
   vm.setColor = function (color) {
       return { 'background-color': color }
+  }
+
+
+  vm.sendRecord = function () {
+    if(vm.record.id){
+      $http.put(api + '/diary/' + vm.record.id, vm.record).then(function(response) {
+        console.log(response.data);
+        vm.closeModal();
+        loadAll();
+      });
+    } else {
+      $http.post(api + '/diary', vm.record).then(function(response) {
+        vm.closeModal();
+        loadAll();
+      });
+    }
+  }
+
+  function addRecord  () {
+    vm.record = {};
+    openModal();
+    vm.record.date = new Date();
+  }
+
+  vm.updateRecord = function (record) {
+    vm.record = record;
+    vm.record.date = new Date();
+    openModal();
+  }
+
+  vm.deleteRecord = function (record) {
+    $http.delete(api + '/diary/' + record.id).then(function(response) {
+    console.log(response.data);
+    loadAll();
+  });
+  }
+
+  vm.search  = function () {
+
+    if(vm.searchString.length < 1) {
+      loadAll();
+      return;
+    }
+
+  $http.get(api + '/diary').then(function(response) {
+    vm.records = response.data.filter((elem) => {
+      if(elem.title.includes(vm.searchString) || elem.description.includes(vm.searchString))
+        return elem;
+    })
+  });
+  }
+
+  vm.filter = function (searchCategory) {
+    $http.get(api + '/diary').then(function(response) {
+      vm.records = response.data.filter((elem) => {
+        if(elem.categories.includes(searchCategory.name))
+          return elem;
+      })
+    });
+  }
+
+  function openModal () {
+    modal[0].style.display = "block";
+  }
+
+  function closeModal  () {
+    modal[0].style.display = "none";
   }
 
 

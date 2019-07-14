@@ -148,3 +148,7 @@ button {
 .edit__record {
   align-self: flex-end;
 }
+
+.fa-trash-alt {
+  margin-right: 15px;
+}

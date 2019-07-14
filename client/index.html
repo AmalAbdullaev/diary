@@ -13,9 +13,9 @@
       <div class="header__logo">
           <i class="fab fa-angrycreative fa-4x"></i>
       </div>
-      <input type="text" class="search header__search " placeholder="Поиск">
+      <input type="text" class="search header__search " placeholder="Поиск" ng-model="vm.searchString" ng-change="vm.search()">
       <div class="add-record header__item-count">
-        <button class="add-record__button" ng-click="vm.openModal()">
+        <button class="add-record__button" ng-click="vm.addRecord()">
           <i class="fas fa-plus fa-2x"></i>
         </button>
         <div class="record-count ">{{vm.records.length}}</div>
@@ -26,43 +26,28 @@
     <main class="main">
         <aside class="side-bar">
             <ul class="categories">
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
-                <li class="category">Спорт</li>
+                <li class="category" 
+                ng-repeat="category in vm.categories" 
+                ng-style="vm.setColor(category.color)"
+                ng-click = "vm.filter(category)"
+                >{{category.name}}</li>
             </ul>
           </aside>
       <section class="content">
           <article class="record" ng-repeat="record in vm.records">
-              <h1 class="headline">Заголовок 
+              <h1 class="headline">
                   {{record.title}}
               </h1>
-              <button class="edit__record">
-                  <i class="fas fa-trash-alt fa-2x"></i>
-                  <i class="fas fa-edit fa-2x"></i>
-              </button>
+              <a class="edit__record">
+                  <i class="fas fa-trash-alt fa-2x" ng-click="vm.deleteRecord(record)"></i>
+                  <i class="fas fa-edit fa-2x" ng-click = "vm.updateRecord(record)"></i>
+              </a>
               <section class="description">
                 <p>{{record.description}}</p>
               </section>
               <footer class="info">
-                  <span class="category" ng-repeat = "category in record.categories track by $index" ng-style="vm.setSelectedColor(category)">{{category}}</span>  
-                  <time class="record-date">{{record.date}}</time>
+                  <span class="category" ng-repeat = "category in record.categories track by $index" ng-style="vm.setSelectedColor(category)" >{{category}}</span>  
+                  <time class="record-date">{{record.date | date:'yyyy-MM-dd HH:mm:ss'}}</time>
               </footer>
           </article>
       </section>
@@ -70,18 +55,19 @@
     <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
+          <form ng-submit="vm.sendRecord()">
           <span class="close" ng-click="vm.closeModal()">&times;</span>
-          <input type="text" name="title" class="title" placeholder="Заголовок">
-          <textarea type="text" name="record">Мои мысли..</textarea>
+          <input type="text" name="title" class="title" placeholder="Заголовок" ng-model = "vm.record.title" required>
+          <textarea type="text" name="record" placeholder="Мои мысли..." ng-model = "vm.record.description" required></textarea>
           <div class="additionally">
-              <input type="date" class="date" name="date">
-              <select class="select-categories"ng-model="vm.selectedCategory" ng-style="vm.setSelectedColor(vm.selectedCategory)" >
+              <select class="select-categories"ng-model="vm.record.categories" multiple>
                 <option selected hidden>{{vm.selectedCategory}}</option>
-                <option class="category select__category" ng-repeat="category in vm.categories" ng-style=vm.setColor(category.color)>{{category.name}}</option>
+                <option class="category select__category" ng-repeat="category in vm.categories" ng-style="vm.setColor(category.color)">{{category.name}}</option>
               </select>
           </div>
 
           <input type="submit" class="add" value="Добавить">
+        </form>
         </div>
       </div>
 </body>
