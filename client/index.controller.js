@@ -23,7 +23,7 @@ angular
 
   function loadAll() {
     $http.get(api + '/diary').then(function(response) {
-      vm.records = response.data;
+      vm.records = response.data.reverse();
       getAllCategories();
     });    
   }
@@ -40,6 +40,7 @@ angular
   }
 
   vm.sendRecord = function () {
+    console.log(vm.record);
     if(vm.record.id){
       $http.put(api + '/diary/' + vm.record.id, vm.record).then(function() {
         vm.closeModal();

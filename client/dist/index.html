@@ -36,10 +36,12 @@
             </ul>
             <form ng-submit="vm.addItemToListCategories()" class="category-form">
                 <div class="category__wrapper">
+                    <i class="fas fa-arrow-down fa-2x"></i>
                     <input type="text" name="category" class="add-category__input" placeholder="Название категории" ng-model="vm.newCategory.name">  
                     <input type="color" name="color" class="add-color__input" ng-model="vm.newCategory.color" required=""> 
                 </div>
-                  <input class="add-category__button" type="submit" value="Добавить категорию">
+                
+                  <input class="add-button" type="submit" value="Добавить категорию">
                 </form>  
           </aside>
       <section class="content">
@@ -85,8 +87,8 @@
             <i class="fas fa-arrow-down fa-2x"></i>
             </div>
           </div>
-          <div class="add-button">
-              <input type="submit" class="add" value="Добавить запись в дневник">
+          <div>
+              <input type="submit" class="add-button" value="Сохранить запись в дневник">
           </div>
         </form>
         </div>

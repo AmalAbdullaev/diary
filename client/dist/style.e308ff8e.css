@@ -90,7 +90,7 @@ li {
   list-style-type: none;
 }
 
-.add-category__button {
+.add-button {
   font-size: 20px;
   padding: 10px 10px 10px 10px;
   height: 45px;
@@ -106,8 +106,8 @@ li {
 }
 
 
-.add-category__button:hover { background: rgb(53, 167, 110); }
-.add-category__button:active {
+.add-button:hover { background: rgb(53, 167, 110); }
+.add-button:active {
   background: rgb(33,147,90);
   box-shadow: 0 3px rgb(33,147,90) inset;
 }
@@ -133,6 +133,8 @@ button:active, button:focus {
 .hoverable:hover {
   color:#ffe; /* Цвет ссылки */ 
 }
+
+
 
 button {
   background: none;
@@ -188,7 +190,9 @@ button {
 
 .edit__record {
   align-self: flex-end;
+  cursor: pointer;
 }
+
 
 .fa-trash-alt {
   margin-right: 15px;
