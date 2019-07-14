@@ -87,7 +87,7 @@ ul::-webkit-scrollbar { width: 0 !important }
   font-size: 20px;
   padding: 10px 10px 10px 10px;
   height: 45px;
-  background: none;
+  margin-top: 15px;
   border: none;
 }
 
