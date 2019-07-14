@@ -1,4 +1,4 @@
-# diary
+# Diary
 Diary app
 
 Запуск проекта
