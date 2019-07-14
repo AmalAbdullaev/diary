@@ -55738,31 +55738,28 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
 
   vm.records = [];
   vm.categories = [];
+  vm.newCategory = {};
+  vm.newCategory.color = '#f6b73c';
   vm.openModal = openModal;
   vm.closeModal = closeModal;
-  vm.addRecord = addRecord;
+  vm.createRecord = createRecord;
   vm.searchString = '';
+  vm.loadAll = loadAll;
   loadAll();
 
   function loadAll() {
     $http.get(api + '/diary').then(function (response) {
-      // console.log(response.data);
       vm.records = response.data;
-      $http.get(api + '/categories').then(function (response) {
-        vm.categories = response.data;
-      });
+      getAllCategories();
     });
   }
 
-  vm.setSelectedColor = function (category) {
-    // let category =  vm.categories.find((category) => {
-    //   if(category.name.toLowerCase() === thisCategory.toLowerCase())
-    //     return category;
-    // }) || 'white';
-    return {
-      'background-color': category.color
-    };
-  };
+  function getAllCategories() {
+    $http.get(api + '/categories').then(function (response) {
+      vm.categories = response.data;
+      vm.listOfCategories = _angular.default.copy(response.data);
+    });
+  }
 
   vm.setColor = function (color) {
     return {
@@ -55772,27 +55769,24 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
 
   vm.sendRecord = function () {
     if (vm.record.id) {
-      $http.put(api + '/diary/' + vm.record.id, vm.record).then(function (response) {
-        console.log(response.data);
+      $http.put(api + '/diary/' + vm.record.id, vm.record).then(function () {
         vm.closeModal();
         loadAll();
       });
     } else {
-      $http.post(api + '/diary', vm.record).then(function (response) {
+      $http.post(api + '/diary', vm.record).then(function () {
         vm.closeModal();
         loadAll();
       });
     }
   };
 
-  function addRecord() {
+  function createRecord() {
     vm.record = {};
     vm.record.categories = [];
     openModal();
     vm.record.date = new Date();
-    $http.get(api + '/categories').then(function (response) {
-      vm.listOfCategories = response.data;
-    });
+    getAllCategories();
   }
 
   vm.updateRecord = function (record) {
@@ -55807,7 +55801,6 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
 
   vm.deleteRecord = function (record) {
     $http.delete(api + '/diary/' + record.id).then(function (response) {
-      console.log(response.data);
       loadAll();
     });
   };
@@ -55828,7 +55821,9 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
   vm.filter = function (searchCategory) {
     $http.get(api + '/diary').then(function (response) {
       vm.records = response.data.filter(function (elem) {
-        if (elem.categories.includes(searchCategory.name)) return elem;
+        return elem.categories.some(function (cat) {
+          return cat.id === searchCategory.id;
+        });
       });
     });
   };
@@ -55852,19 +55847,21 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
 
   function closeModal() {
     modal[0].style.display = "none";
-  } // $http.get(api + '/diary').then(function(response) {
-  //   console.log(response.data);
-  // });
-  // $http.post(api + '/diary', {"m": 1}).then(function(response) {
-  //   console.log(response.data);
-  // });
-  // $http.put(api + '/diary/27', {"mferf": 1123}).then(function(response) {
-  //   console.log(response.data);
-  // });
-  // $http.delete(api + '/diary/26').then(function(response) {
-  //   console.log(response.data);
-  // });
+  }
 
+  vm.addItemToListCategories = function () {
+    $http.post(api + '/categories', vm.newCategory).then(function () {
+      vm.newCategory = {};
+      vm.newCategory.color = '#f6b73c';
+      getAllCategories();
+    });
+  };
+
+  vm.removeItemFromListCategories = function (category) {
+    $http.delete(api + '/categories/' + category.id).then(function () {
+      getAllCategories();
+    });
+  };
 }]);
 },{"angular":"node_modules/angular/index.js","../config":"../config.js","lodash":"node_modules/lodash/lodash.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -55894,7 +55891,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "26540" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "32084" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

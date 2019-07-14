@@ -11,62 +11,54 @@ angular
   const modal = angular.element(document.querySelector("#myModal"));
   vm.records = [];
   vm.categories = [];
+  vm.newCategory =  {};
+  vm.newCategory.color = '#f6b73c';
   vm.openModal = openModal;
   vm.closeModal = closeModal;
-  vm.addRecord = addRecord;
+  vm.createRecord = createRecord;
   vm.searchString = '';
+  vm.loadAll = loadAll;
+
   loadAll();
 
   function loadAll() {
     $http.get(api + '/diary').then(function(response) {
-      // console.log(response.data);
       vm.records = response.data;
-      $http.get(api + '/categories').then(function(response) {
-        vm.categories = response.data;
-      }); 
+      getAllCategories();
     });    
   }
 
-  vm.setSelectedColor = function (category){
-
-    // let category =  vm.categories.find((category) => {
-    //   if(category.name.toLowerCase() === thisCategory.toLowerCase())
-    //     return category;
-    // }) || 'white';
-
-    return { 'background-color': category.color};
+  function getAllCategories () {
+    $http.get(api + '/categories').then(function(response) {
+      vm.categories = response.data;
+      vm.listOfCategories = angular.copy(response.data);
+    }); 
   }
-
 
   vm.setColor = function (color) {
       return { 'background-color': color }
   }
 
-
   vm.sendRecord = function () {
     if(vm.record.id){
-      $http.put(api + '/diary/' + vm.record.id, vm.record).then(function(response) {
-        console.log(response.data);
+      $http.put(api + '/diary/' + vm.record.id, vm.record).then(function() {
         vm.closeModal();
         loadAll();
       });
     } else {
-      $http.post(api + '/diary', vm.record).then(function(response) {
+      $http.post(api + '/diary', vm.record).then(function() {
         vm.closeModal();
         loadAll();
       });
     }
   }
 
-  function addRecord  () {
+  function createRecord  () {
     vm.record = {};
     vm.record.categories = [];
     openModal();
     vm.record.date = new Date();
-
-    $http.get(api + '/categories').then(function(response) {
-      vm.listOfCategories = response.data;
-    }); 
+    getAllCategories();
   }
 
   vm.updateRecord = function (record) {
@@ -82,18 +74,15 @@ angular
 
   vm.deleteRecord = function (record) {
     $http.delete(api + '/diary/' + record.id).then(function(response) {
-    console.log(response.data);
-    loadAll();
-  });
+      loadAll();
+    });
   }
 
   vm.search  = function () {
-
     if(vm.searchString.length < 1) {
       loadAll();
       return;
     }
-
   $http.get(api + '/diary').then(function(response) {
     vm.records = response.data.filter((elem) => {
       if(elem.title.includes(vm.searchString) || elem.description.includes(vm.searchString))
@@ -105,8 +94,9 @@ angular
   vm.filter = function (searchCategory) {
     $http.get(api + '/diary').then(function(response) {
       vm.records = response.data.filter((elem) => {
-        if(elem.categories.includes(searchCategory.name))
-          return elem;
+        return elem.categories.some((cat) => {
+          return cat.id === searchCategory.id;
+        })
       })
     });
   }
@@ -132,21 +122,18 @@ angular
     modal[0].style.display = "none";
   }
 
+  vm.addItemToListCategories = function () {
+    $http.post(api + '/categories', vm.newCategory).then(function() {
+      vm.newCategory = {};
+      vm.newCategory.color = '#f6b73c';
+      getAllCategories();
+    });
+  }
 
-  // $http.get(api + '/diary').then(function(response) {
-  //   console.log(response.data);
-  // });
-
-  // $http.post(api + '/diary', {"m": 1}).then(function(response) {
-  //   console.log(response.data);
-  // });
-
-  // $http.put(api + '/diary/27', {"mferf": 1123}).then(function(response) {
-  //   console.log(response.data);
-  // });
-
-  // $http.delete(api + '/diary/26').then(function(response) {
-  //   console.log(response.data);
-  // });
+  vm.removeItemFromListCategories = function (category) {
+    $http.delete(api + '/categories/' + category.id).then(function() {
+      getAllCategories();
+    });
+  }
 
 }]);

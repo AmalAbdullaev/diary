@@ -80,8 +80,15 @@ ul::-webkit-scrollbar { width: 0 !important }
 .categories {
   height: 700px;
   overflow-y: scroll;
-  width: 250px;
   list-style-type: none;
+}
+
+.add-category__button {
+  font-size: 20px;
+  padding: 10px 10px 10px 10px;
+  height: 45px;
+  background: none;
+  border: none;
 }
 
 .category {
@@ -144,11 +151,6 @@ button {
   margin-right: 500px;
 }
 
-.modal__categories {
-  height: 100px;
-  padding: 0;
-}
-
 .categories-block {
   display: flex;
 }
@@ -159,6 +161,31 @@ button {
 
 .fa-trash-alt {
   margin-right: 15px;
+}
+
+.add-record__text {
+  font-size: 20px; 
+  padding-left: 20px;
+}
+
+.add-record__button {
+  margin-top: 10px;
+}
+
+.add-category__input {
+  width: 200px;
+  height: 20px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.add-color__input {
+  height: 30px;
+  margin-left: 10px;
+}
+
+.category-wrapper {
+  display: flex;
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {

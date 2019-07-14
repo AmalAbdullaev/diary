@@ -1,17 +1,1 @@
-[
-   {
-    "id": 1,
-    "color" : "red",
-    "name": "Спорт"
-   },
-   {
-    "id" : 2,
-    "color" : "blue",
-    "name": "Учеба"
-   },
-  {
-    "id" : 3,
-    "color" : "green",
-    "name": "Саморазвитие"
-   }
-]
+[{"id":1,"color":"red","name":"Спорт"},{"id":2,"color":"blue","name":"Учеба"},{"color":"#2ef8de","name":"Работа","id":0},{"name":"Саморазвитие","color":"#ff80ff","id":3}]
