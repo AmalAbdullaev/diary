@@ -29,7 +29,7 @@
             <ul class="categories">
               <li class="category" ng-click="vm.loadAll()">Все записи</li>
                 <li class="category" ng-repeat="category in vm.categories" ng-style="vm.setColor(category.color)" ng-click="vm.filter(category)">{{category.name}}
-                <i class="fas fa-trash-alt" ng-click="vm.removeItemFromListCategories(category)"></i>
+                <i class="fas fa-trash-alt" ng-click="vm.removeItemFromListCategories(category); $event.stopPropagation()"></i>
               </li>
               <li>
                   <form ng-submit="vm.addItemToListCategories()">
