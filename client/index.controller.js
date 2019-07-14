@@ -1,9 +1,10 @@
 import angular from 'angular';
-import config from '../config'
+import config from '../config';
+import * as _ from 'lodash';
 
 angular
-  .module('myApp', [])
-  .controller('myController', ['$http', '$document', '$element', function($http, $document, $element) {
+  .module('diaryApp', [])
+  .controller('diaryController', ['$http', function($http) {
 
   const vm = this;
   const api = config.host;
@@ -21,19 +22,17 @@ angular
       // console.log(response.data);
       vm.records = response.data;
       $http.get(api + '/categories').then(function(response) {
-        // console.log(response.data);
         vm.categories = response.data;
-        console.log(vm.categories);
       }); 
     });    
   }
 
-  vm.setSelectedColor = function (thisCategory){
+  vm.setSelectedColor = function (category){
 
-    let category =  vm.categories.find((category) => {
-      if(category.name.toLowerCase() === thisCategory.toLowerCase())
-        return category;
-    }) || 'white';
+    // let category =  vm.categories.find((category) => {
+    //   if(category.name.toLowerCase() === thisCategory.toLowerCase())
+    //     return category;
+    // }) || 'white';
 
     return { 'background-color': category.color};
   }
@@ -61,14 +60,24 @@ angular
 
   function addRecord  () {
     vm.record = {};
+    vm.record.categories = [];
     openModal();
     vm.record.date = new Date();
+
+    $http.get(api + '/categories').then(function(response) {
+      vm.listOfCategories = response.data;
+    }); 
   }
 
   vm.updateRecord = function (record) {
     vm.record = record;
     vm.record.date = new Date();
     openModal();
+
+    $http.get(api + '/categories').then(function(response) {
+      vm.listOfCategories = response.data;
+      vm.listOfCategories = _.xorBy(vm.listOfCategories,vm.record.categories, 'id');
+    }); 
   }
 
   vm.deleteRecord = function (record) {
@@ -100,6 +109,19 @@ angular
           return elem;
       })
     });
+  }
+
+  vm.addCategory = function (category) {
+    vm.record.categories.push(category);
+    let index = vm.listOfCategories.indexOf(category);
+    vm.listOfCategories.splice(index,1);
+  }
+
+  vm.removeCategory = function (category) {
+    console.log(category,vm.record.categories);
+    let index = vm.record.categories.indexOf(category);
+    vm.record.categories.splice(index,1);
+    vm.listOfCategories.push(category);
   }
 
   function openModal () {

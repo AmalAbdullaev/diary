@@ -8,7 +8,7 @@
   <link href="/modal.style.dd14f33e.css" rel="stylesheet">
   <title>E-Diary</title>
 <script src="/style.e308ff8e.js"></script><script src="/modal.style.dd14f33e.js"></script></head>
-<body ng-app="myApp" ng-controller="myController as vm">
+<body ng-cloak="" ng-app="diaryApp" ng-controller="diaryController as vm">
     <header class="header">
       <div class="header__logo">
           <i class="fab fa-angrycreative fa-4x"></i>
@@ -18,7 +18,7 @@
         <button class="add-record__button" ng-click="vm.addRecord()">
           <i class="fas fa-plus fa-2x"></i>
         </button>
-        <div class="record-count ">{{vm.records.length}}</div>
+        <div class="record-count">{{vm.records.length}}</div>
         <i class="fas fa-flag fa-2x"></i>
       </div>
     </header>
@@ -42,7 +42,7 @@
                 <p>{{record.description}}</p>
               </section>
               <footer class="info">
-                  <span class="category" ng-repeat="category in record.categories track by $index" ng-style="vm.setSelectedColor(category)">{{category}}</span>  
+                  <span class="category" ng-repeat="category in record.categories track by $index" ng-style="vm.setSelectedColor(category)">{{category.name}}</span>  
                   <time class="record-date">{{record.date | date:'yyyy-MM-dd HH:mm:ss'}}</time>
               </footer>
           </article>
@@ -55,12 +55,25 @@
           <span class="close" ng-click="vm.closeModal()">&times;</span>
           <input type="text" name="title" class="title" placeholder="Заголовок" ng-model="vm.record.title" required="">
           <textarea type="text" name="record" placeholder="Мои мысли..." ng-model="vm.record.description" required=""></textarea>
-          <div class="additionally">
-              <select class="select-categories" ng-model="vm.record.categories" multiple="">
-                <option selected="" hidden="">{{vm.selectedCategory}}</option>
+          <!-- <div class="additionally">
+              <select class="select-categories"ng-model="vm.record.categories" multiple>
+                <option selected hidden>{{vm.selectedCategory}}</option>
                 <option class="category select__category" ng-repeat="category in vm.categories" ng-style="vm.setColor(category.color)">{{category.name}}</option>
               </select>
+          </div> -->
+          <div class="categories-block">
+            <div>
+              <ul class="categories modal__categories">
+                <li class="category" ng-repeat="category in vm.listOfCategories track by $index" ng-style="vm.setColor(category.color)" ng-click="vm.addCategory(category)">{{category.name}}</li>
+            </ul>
+            </div>
+            <div>
+              <ul class="categories modal__categories">
+                <li class="category" ng-repeat="category in vm.record.categories track by $index" ng-style="vm.setColor(category.color)" ng-click="vm.removeCategory(category)">{{category.name}}</li>
+            </ul>
+            </div>
           </div>
+
 
           <input type="submit" class="add" value="Добавить">
         </form>
