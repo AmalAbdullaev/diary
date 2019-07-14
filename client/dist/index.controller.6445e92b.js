@@ -55756,7 +55756,7 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
 
   function getAllCategories() {
     $http.get(api + '/categories').then(function (response) {
-      vm.categories = response.data;
+      vm.categories = response.data.reverse();
       vm.listOfCategories = _angular.default.copy(response.data);
     });
   }
@@ -55850,6 +55850,7 @@ _angular.default.module('diaryApp', []).controller('diaryController', ['$http', 
   }
 
   vm.addItemToListCategories = function () {
+    if (vm.newCategory.name.length < 1) return;
     $http.post(api + '/categories', vm.newCategory).then(function () {
       vm.newCategory = {};
       vm.newCategory.color = '#f6b73c';

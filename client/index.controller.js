@@ -30,7 +30,7 @@ angular
 
   function getAllCategories () {
     $http.get(api + '/categories').then(function(response) {
-      vm.categories = response.data;
+      vm.categories = response.data.reverse();
       vm.listOfCategories = angular.copy(response.data);
     }); 
   }
@@ -123,6 +123,10 @@ angular
   }
 
   vm.addItemToListCategories = function () {
+
+    if(vm.newCategory.name.length < 1)
+      return;
+
     $http.post(api + '/categories', vm.newCategory).then(function() {
       vm.newCategory = {};
       vm.newCategory.color = '#f6b73c';

@@ -5,14 +5,20 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
 ul::-webkit-scrollbar { width: 0 !important }
+ul {
+  scrollbar-width: none;
+}
 
+li {
+  cursor: pointer;
+}
 
 .header {
-  background-color:darkorange;
+  background-color:rgb(64,199,129);
   position: fixed;
   display: flex;
   top: 0;
@@ -61,6 +67,7 @@ ul::-webkit-scrollbar { width: 0 !important }
   width: 700px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.25), 0 0px 5px rgba(0,0,0,0.22);
 }
 
 .headline {
@@ -78,7 +85,7 @@ ul::-webkit-scrollbar { width: 0 !important }
 }
 
 .categories {
-  height: 700px;
+  height: 400px;
   overflow-y: scroll;
   list-style-type: none;
 }
@@ -89,6 +96,23 @@ ul::-webkit-scrollbar { width: 0 !important }
   height: 45px;
   margin-top: 15px;
   border: none;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+}
+
+
+.add-category__button:hover { background: rgb(53, 167, 110); }
+.add-category__button:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+.category-form {
+  margin-left: 20px;
 }
 
 .category {
@@ -103,6 +127,11 @@ ul::-webkit-scrollbar { width: 0 !important }
 
 button:active, button:focus {
   outline: none;
+}
+
+
+.hoverable:hover {
+  color:#ffe; /* Цвет ссылки */ 
 }
 
 button {
@@ -148,7 +177,9 @@ button {
   padding-left: 20px;
   padding-right: 20px;
   margin-left: 250px;
-  margin-right: 500px;
+  margin-right: 200px;
+  border-radius: 10px;
+  outline:none;
 }
 
 .categories-block {
@@ -177,6 +208,8 @@ button {
   height: 20px;
   font-size: 20px;
   padding: 10px;
+  border-radius: 10px;
+  outline:none;
 }
 
 .add-color__input {

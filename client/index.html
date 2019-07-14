@@ -16,7 +16,8 @@
       </div>
       <input type="text" class="search header__search " placeholder="Поиск" ng-model="vm.searchString" ng-change="vm.search()">
       <div class="add-record header__item-count">
-        <button class="add-record__button" ng-click="vm.createRecord()">
+          <span>Добавить запись</span>
+        <button class="add-record__button hoverable" ng-click="vm.createRecord()">
           <i class="fas fa-plus fa-2x"></i>
         </button>
         <div class="record-count">{{vm.records.length}}</div>
@@ -27,24 +28,22 @@
     <main class="main">
         <aside class="side-bar">
             <ul class="categories">
-              <li class="category"  ng-click="vm.loadAll()">Все записи</li>
+              <li class="category hoverable"  ng-click="vm.loadAll()">Все записи</li>
                 <li class="category" 
                 ng-repeat="category in vm.categories" 
                 ng-style="vm.setColor(category.color)"
-                ng-click = "vm.filter(category)"
                 >{{category.name}}
-                <i class="fas fa-trash-alt" ng-click="vm.removeItemFromListCategories(category); $event.stopPropagation()"></i>
-              </li>
-              <li>
-                  <form ng-submit="vm.addItemToListCategories()">
-                    <div class="category__wrapper">
-                        <input type="text" name="category" class="add-category__input" placeholder="Название категории" ng-model="vm.newCategory.name" required>  
-                        <input type="color" name="color" class="add-color__input" ng-model="vm.newCategory.color" required> 
-                    </div>
-                      <input class="add-category__button" type="submit" value="Добавить категорию">
-                    </form>  
+                <i class="fas fa-filter hoverable"   ng-click = "vm.filter(category)"></i>
+                <i class="fas fa-trash-alt hoverable" ng-click="vm.removeItemFromListCategories(category); $event.stopPropagation()"></i>
               </li>
             </ul>
+            <form ng-submit="vm.addItemToListCategories()" class="category-form">
+                <div class="category__wrapper">
+                    <input type="text" name="category" class="add-category__input" placeholder="Название категории" ng-model="vm.newCategory.name" >  
+                    <input type="color" name="color" class="add-color__input" ng-model="vm.newCategory.color" required> 
+                </div>
+                  <input class="add-category__button" type="submit" value="Добавить категорию">
+                </form>  
           </aside>
       <section class="content">
           <article class="record" ng-repeat="record in vm.records">
@@ -76,7 +75,7 @@
             <div class="full-list">
               <h3>Список категорий</h3>
               <ul class="categories modal__categories">
-                <li class="category" 
+                <li class="category hoverable" 
                 ng-repeat="category in vm.listOfCategories track by $index" 
                 ng-style="vm.setColor(category.color)"
                 ng-click = "vm.addCategory(category)"
@@ -87,8 +86,8 @@
             <div class="arrow"><i class="fas fa-arrows-alt-h fa-2x"></i></div>
             <div class="selected-list">
                 <h3>Выбранные категории</h3>
-              <ul class="categories modal__categories">
-                <li class="category" 
+              <ul class="categories modal__categories ">
+                <li class="category hoverable" 
                 ng-repeat="category in vm.record.categories track by $index" 
                 ng-style="vm.setColor(category.color)"
                 ng-click = "vm.removeCategory(category)"
